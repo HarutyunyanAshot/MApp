@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.mapps.mapp.drawing.Controller;
+import com.mapps.mapp.drawing.History;
 
 /**
  * Created by Ashot on 2/19/16.
@@ -27,9 +28,13 @@ public class DrawingView extends View {
     private float mX, mY;
     private static final float TOLERANCE = 3;
     private Controller controller;
+    private History hiatory;
+
+    private OnChangeListener listener;
 
     public DrawingView(Context context) {
         super(context);
+        hiatory = new History();
         controller = new Controller(this, TOLERANCE);
     }
 
@@ -38,6 +43,7 @@ public class DrawingView extends View {
     public DrawingView(Context c, AttributeSet attrs) {
         super(c, attrs);
         context = c;
+        hiatory = new History();
 
         // we set a new Path
         mPath = new Path();
@@ -60,6 +66,7 @@ public class DrawingView extends View {
         // your Canvas will draw onto the defined Bitmap
         mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
+        onUpdate();
     }
 
             // override onDraw
@@ -72,54 +79,48 @@ public class DrawingView extends View {
 //        canvas.drawPath(mPath, mPaint);
     }
 
-            // when ACTION_DOWN start touch according to the x,y values
-    private void startTouch(float x, float y) {
-        mPath.moveTo(x, y);
-        mX = x;
-        mY = y;
-    }
-
-            // when ACTION_MOVE move touch according to the x,y values
-    private void moveTouch(float x, float y) {
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
-        if (dx >= TOLERANCE || dy >= TOLERANCE) {
-            mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
-            mX = x;
-            mY = y;
-        }
-    }
 
     public void clearCanvas() {
         mPath.reset();
         invalidate();
     }
 
-            // when ACTION_UP stop touch
-    private void upTouch() {
-        mPath.lineTo(mX, mY);
+ public void undo() {
+     Bitmap bitmap = hiatory.undo();
+     if (bitmap != null) {
+         mBitmap = bitmap;
+         mCanvas.setBitmap(mBitmap);
+         invalidate();
+     }
+ }
+
+    public void redo() {
+        Bitmap bitmap = hiatory.redo();
+        if (bitmap != null) {
+            mBitmap = bitmap;
+            mCanvas.setBitmap(mBitmap);
+            invalidate();
+        }
+    }
+
+    public boolean canUndo() {
+        return hiatory.canUndo();
+    }
+
+    public boolean canRedo() {
+        return hiatory.canRedo();
+    }
+
+    public void onUpdate() {
+        hiatory.push(mBitmap.copy(Bitmap.Config.ARGB_8888, true));
+        if (listener != null) {
+            listener.onChange();
+        }
     }
 
             //override the onTouchEvent
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                startTouch(x, y);
-//                invalidate();
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                moveTouch(x, y);
-//                invalidate();
-//                break;
-//            case MotionEvent.ACTION_UP:
-//                upTouch();
-//                invalidate();
-//                break;
-//        }
 
         controller.onTouch(event);
         return true;
@@ -143,6 +144,14 @@ public class DrawingView extends View {
         Canvas c = new Canvas(bitmap);
         c.drawBitmap(mBitmap, 0, 0, null);
         return bitmap;
+    }
+
+    public void setOnChangeListener(OnChangeListener listener) {
+        this.listener = listener;
+    }
+
+   public interface OnChangeListener {
+        void onChange();
     }
 
 }

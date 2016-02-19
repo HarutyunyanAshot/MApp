@@ -82,6 +82,7 @@ public class Controller {
             curve.computeUpdateBounds(updateBounds);
             invalidateDrawingView(updateBounds);
         }
+        drawingView.onUpdate();
         curve = null;
     }
 

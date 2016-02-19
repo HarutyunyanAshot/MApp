@@ -27,6 +27,8 @@ public class DrawingActivity extends MAppBaseActivity {
     private ImageView bgImage;
     private Button prev;
     private Button next;
+    private Button undo;
+    private Button redo;
     private ArrayList<String> imageDetailsPaths;
     private int currentImageIndex = -1;
     public static final String DRAWING_FOLDER = Environment.getExternalStorageDirectory() + "/" + "drawings";
@@ -62,11 +64,39 @@ public class DrawingActivity extends MAppBaseActivity {
         Glide.with(this).asBitmap().load(Uri.parse("file:///android_asset/" + previewImagePath)).into(bgImage);
         initButtons();
 
+        drawingView.setOnChangeListener(new DrawingView.OnChangeListener() {
+            @Override
+            public void onChange() {
+                undo.setEnabled(drawingView.canUndo());
+                redo.setEnabled(drawingView.canRedo());
+            }
+        });
+
     }
 
     private void initButtons() {
         prev = (Button) findViewById(R.id.btn_prev);
         next = (Button) findViewById(R.id.btn_next);
+        undo = (Button) findViewById(R.id.btn_undo);
+        redo = (Button) findViewById(R.id.btn_redo);
+
+        undo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawingView.undo();
+                undo.setEnabled(drawingView.canUndo());
+                redo.setEnabled(drawingView.canRedo());
+            }
+        });
+
+        redo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawingView.redo();
+                undo.setEnabled(drawingView.canUndo());
+                redo.setEnabled(drawingView.canRedo());
+            }
+        });
 
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
