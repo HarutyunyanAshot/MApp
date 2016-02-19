@@ -32,7 +32,7 @@ public class Brush extends Curve {
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(4f);
+        paint.setStrokeWidth(6f);
 
         lastX = new float[3];
         lastY = new float[3];

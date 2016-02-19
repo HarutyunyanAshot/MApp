@@ -120,4 +120,5 @@ public class Controller {
     public void setEraser(boolean isEraser) {
         this.isEraser = isEraser;
     }
+
 }

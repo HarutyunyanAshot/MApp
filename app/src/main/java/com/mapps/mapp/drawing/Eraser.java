@@ -32,7 +32,7 @@ public class Eraser extends Curve {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setColor(Color.TRANSPARENT);// TODO test
-        paint.setStrokeWidth(4f);
+        paint.setStrokeWidth(6f);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
     }
 

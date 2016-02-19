@@ -137,5 +137,8 @@ public class DrawingView extends View {
         return mCanvas;
     }
 
+    public Bitmap getBitmap() {
+        return mBitmap.copy(Bitmap.Config.ARGB_8888,false);
+    }
 
 }
