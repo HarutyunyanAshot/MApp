@@ -25,4 +25,5 @@ dependencies {
     compile('com.android.support:recyclerview-v7:22.+') {
         exclude module: 'support-v4'
     }
+    compile files('libs/glide-4.0.0-20151212.212614-127.jar')
 }
