@@ -18,6 +18,7 @@ public class MainActivity extends MAppBaseActivity {
     private DrawItemListAdapter adapter;
     public static final String EXTRA_IMAGE_DETAILS_PATHS = "imageDetailsPaths";
     public static final String EXTRA_PREVIEW_IMAGE_PATH = "previewImagePath";
+    public static final String EXTRA_IMAGE_NAME = "ImageName";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,8 @@ public class MainActivity extends MAppBaseActivity {
                 Intent intent = new Intent(MainActivity.this,DrawingActivity.class);
                 ArrayList<String> detailImagePaths = adapter.getItem(position).imageDetailsPaths;
                 intent.putStringArrayListExtra(EXTRA_IMAGE_DETAILS_PATHS,detailImagePaths);
-                intent.putExtra(EXTRA_PREVIEW_IMAGE_PATH,adapter.getItem(position).imagePath);
+                intent.putExtra(EXTRA_PREVIEW_IMAGE_PATH, adapter.getItem(position).imagePath);
+                intent.putExtra(EXTRA_IMAGE_NAME,adapter.getItem(position).itemName);
                 startActivity(intent);
             }
         }));
