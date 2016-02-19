@@ -4,10 +4,22 @@
     "image": "dog.png",
     "detail_images": [
       {
-        "name": "1"
+        "name": "1.png"
       },
       {
-        "name": "2"
+        "name": "2.png"
+      },
+      {
+        "name": "3.png"
+      },
+      {
+        "name": "4.png"
+      },
+      {
+        "name": "5.png"
+      },
+      {
+        "name": "6.png"
       }
     ]
   },
@@ -16,46 +28,88 @@
     "image": "cat.png",
     "detail_images": [
       {
-        "name": "1"
+        "name": "1.png"
       },
       {
-        "name": "2"
+        "name": "2.png"
+      },
+      {
+        "name": "3.png"
+      },
+      {
+        "name": "4.png"
+      },
+      {
+        "name": "5.png"
       }
     ]
   },
   {
-    "name": "monkey",
-    "image": "monkey.png",
+    "name": "fox",
+    "image": "fox.png",
     "detail_images": [
       {
-        "name": "1"
+        "name": "1.png"
       },
       {
-        "name": "2"
+        "name": "2.png"
+      },
+      {
+        "name": "3.png"
+      },
+      {
+        "name": "4.png"
+      },
+      {
+        "name": "5.png"
+      },
+      {
+        "name": "6.png"
       }
     ]
   },
   {
-    "name": "donkey",
-    "image": "donkey.png",
+    "name": "lion",
+    "image": "lion.png",
     "detail_images": [
       {
-        "name": "1"
+        "name": "1.png"
       },
       {
-        "name": "2"
+        "name": "2.png"
+      },
+      {
+        "name": "3.png"
+      },
+      {
+        "name": "4.png"
+      },
+      {
+        "name": "5.png"
       }
     ]
   },
   {
-    "name": "elephant",
-    "image": "elephant.png",
+    "name": "sheep",
+    "image": "sheep.png",
     "detail_images": [
       {
-        "name": "1"
+        "name": "1.png"
       },
       {
-        "name": "2"
+        "name": "2.png"
+      },
+      {
+        "name": "3.png"
+      },
+      {
+        "name": "4.png"
+      },
+      {
+        "name": "5.png"
+      },
+      {
+        "name": "6.png"
       }
     ]
   },
@@ -64,10 +118,22 @@
     "image": "bear.png",
     "detail_images": [
       {
-        "name": "1"
+        "name": "1.png"
       },
       {
-        "name": "2"
+        "name": "2.png"
+      },
+      {
+        "name": "3.png"
+      },
+      {
+        "name": "4.png"
+      },
+      {
+        "name": "5.png"
+      },
+      {
+        "name": "6.png"
       }
     ]
   }

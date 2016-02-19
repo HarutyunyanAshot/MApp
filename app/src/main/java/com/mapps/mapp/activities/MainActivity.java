@@ -34,7 +34,7 @@ public class MainActivity extends MAppBaseActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(MainActivity.this,DrawingActivity.class);
-                ArrayList<String> detailImagePaths = adapter.getItem(position).getImageDetailsPaths();
+                ArrayList<String> detailImagePaths = adapter.getItem(position).imageDetailsPaths;
                 intent.putStringArrayListExtra(EXTRA_IMAGE_DETAILS_PATHS,detailImagePaths);
                 startActivity(intent);
             }

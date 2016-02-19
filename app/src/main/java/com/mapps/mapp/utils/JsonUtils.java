@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- * Created by intern on 2/19/16.
+ * Created by Mariam on 2/19/16.
  */
 public class JsonUtils {
     public static final String JSON_PROP_NAME = "name";
@@ -35,7 +35,12 @@ public class JsonUtils {
                 String categoryName = drawCategory.getString(JSON_PROP_NAME);
                 String categoryImageName = drawCategory.getString(JSON_PROP_IMAGE);
                 String categoryImagePath = "images/" + categoryImageName;
-                categories.add(new DrawItem(categoryName,categoryImagePath ));
+                JSONArray categoryImages = drawCategory.getJSONArray(JSON_PROP_DETAIL_IMAGES);
+                ArrayList<String> imageDetailsPaths = new ArrayList<>();
+                for (int j = 0; j < categoryImages.length(); j++) {
+                    imageDetailsPaths.add("images/" + categoryName + "/" + categoryImages.getJSONObject(j).getString(JSON_PROP_NAME));
+                }
+                categories.add(new DrawItem(categoryName, categoryImagePath, imageDetailsPaths));
             }
 
         } catch (IOException e) {
@@ -46,17 +51,7 @@ public class JsonUtils {
         return categories;
     }
 
-    public static String getCategoryImagePath(JSONArray jsonArray, int index, String categoryName) {
-        String imageName = null;
 
-        try {
-            imageName = jsonArray.getJSONObject(index).getString(JSON_PROP_NAME);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String path = categoryName + "/" + imageName;
-        return path;
-    }
     private static String convertStreamToString(InputStream is) {
         StringBuilder sb = new StringBuilder();
 

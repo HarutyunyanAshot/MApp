@@ -8,16 +8,12 @@ import java.util.ArrayList;
 public class DrawItem {
     public String imagePath;
     public String itemName;
-    private ArrayList<String> imageDetailsPaths;
+    public ArrayList<String> imageDetailsPaths;
 
 
-    public DrawItem( String itemName, String imagePath) {
+    public DrawItem( String itemName, String imagePath, ArrayList<String> imageDetailsPaths) {
         this.imagePath = imagePath;
         this.itemName = itemName;
-    }
-    public ArrayList<String> getImageDetailsPaths(){
-        imageDetailsPaths = new ArrayList<>();
-        //TODO staff
-        return imageDetailsPaths;
+        this.imageDetailsPaths = imageDetailsPaths;
     }
 }
