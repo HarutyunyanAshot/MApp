@@ -138,7 +138,11 @@ public class DrawingView extends View {
     }
 
     public Bitmap getBitmap() {
-        return mBitmap.copy(Bitmap.Config.ARGB_8888,false);
+        Bitmap bitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        bitmap.eraseColor(Color.WHITE);
+        Canvas c = new Canvas(bitmap);
+        c.drawBitmap(mBitmap, 0, 0, null);
+        return bitmap;
     }
 
 }
