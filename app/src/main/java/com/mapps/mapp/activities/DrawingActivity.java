@@ -35,6 +35,7 @@ public class DrawingActivity extends  MAppBaseActivity{
             }
         });
         Intent intent = getIntent();
+        String previewImagePath = intent.getStringExtra(MainActivity.EXTRA_PREVIEW_IMAGE_PATH);
         ArrayList<String> imageDetailsPaths = intent.getStringArrayListExtra(MainActivity.EXTRA_IMAGE_DETAILS_PATHS);
 
     }
