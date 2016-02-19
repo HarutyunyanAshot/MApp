@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.mapps.mapp.controller.Controller;
+import com.mapps.mapp.drawing.Controller;
 
 /**
  * Created by Ashot on 2/19/16.
@@ -25,7 +25,7 @@ public class DrawingView extends View {
     Context context;
     private Paint mPaint;
     private float mX, mY;
-    private static final float TOLERANCE = 10;
+    private static final float TOLERANCE = 3;
     private Controller controller;
 
     public DrawingView(Context context) {
@@ -68,6 +68,8 @@ public class DrawingView extends View {
         super.onDraw(canvas);
         // draw the mPath with the mPaint on the canvas when onDraw
         canvas.drawBitmap(mBitmap, 0, 0, null);
+        controller.onDraw(canvas);
+//        canvas.drawPath(mPath, mPaint);
     }
 
             // when ACTION_DOWN start touch according to the x,y values

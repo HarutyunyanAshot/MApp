@@ -1,10 +1,6 @@
-package com.mapps.mapp.controller;
+package com.mapps.mapp.drawing;
 
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -19,13 +15,13 @@ public class Controller {
     private DrawingView drawingView;
     private final float touchTollerance;
 
-    private Path mPath;
-    private Paint mPaint;
 
     private float prevX;
     private float prevY;
 
     private boolean isEraser = false;
+
+    private Curve curve;
 
     public Controller(DrawingView view, float touchTollerance) {
 
@@ -64,63 +60,45 @@ public class Controller {
     private Rect updateBounds;
 
     protected void onTouchDown(float x, float y) {
-         init();
-        mPath.moveTo(x, y);//TODO revise
-        update();
-        invalidateDrawingView();
+        curve = isEraser ? new Eraser() : new Brush();
+        curve.setStartPoint(x, y, 0.0f);//TODO revise
+        if (curve.isPiecewiseUpdatable())
+            curve.update(drawingView.getCanvas());
+        curve.computeUpdateBounds(updateBounds);
+        invalidateDrawingView(updateBounds);
     }
 
     protected void onTouchMove(float x, float y) {
-        float dx = Math.abs(x - prevX);
-        float dy = Math.abs(y - prevY);
-        if (dx >= touchTollerance || dy >= touchTollerance) {
-            mPath.quadTo(prevX, prevY, (x + prevX) / 2, (y + prevY) / 2);
-            prevX = x;
-            prevY = y;
-        }
-        update();
-        invalidateDrawingView();
+        curve.addPoint(x, y, 0.0f);
+        if (curve.isPiecewiseUpdatable())
+            curve.update(drawingView.getCanvas());
+        curve.computeUpdateBounds(updateBounds);
+        invalidateDrawingView(updateBounds);
     }
 
     protected void onTouchUp(float x, float y) {
-       update();
-          invalidateDrawingView();
-        mPath = null;
+        if (!curve.isPiecewiseUpdatable()) {
+            curve.update(drawingView.getCanvas());
+            curve.computeUpdateBounds(updateBounds);
+            invalidateDrawingView(updateBounds);
+        }
+        curve = null;
     }
 
     protected void onTouchCancel(float x, float y) {
         Log.d("SimpleDrawingController", "OnTouchCancel");
     }
 
-//    @Override
-//    protected void onDraw(Canvas paperViewCanvas) {
-//        if (curve != null && !curve.isPiecewiseUpdatable())
-//            curve.update(paperViewCanvas);
-//    }
 
-    private void update() {
-        drawingView.getCanvas().drawPath(mPath, mPaint);
-    }
-    private void init() {
-        mPath = new Path();
-
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        mPaint.setAntiAlias(true);
-        if (isEraser) {
-            mPaint.setColor(Color.TRANSPARENT);
-            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
-        } else {
-            mPaint.setColor(Color.BLACK);
-        }
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeWidth(4f);
-
-//        mPaint.setAlpha(alpha);
+    public void onDraw(Canvas canvas) {
+        if (curve != null && !curve.isPiecewiseUpdatable())
+            curve.update(canvas);
     }
 
-    private void invalidateDrawingView() {
-        drawingView.invalidate();
+
+    protected final void invalidateDrawingView(Rect dirty) {
+        if (!dirty.isEmpty())
+            drawingView.invalidate(dirty);
     }
 
     public float distance(float x1, float y1, float x2, float y2) {
