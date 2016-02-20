@@ -24,7 +24,7 @@ public class SaveAndShareActivity extends MAppBaseActivity {
         Intent intent = getIntent();
         final String path = intent.getStringExtra(DrawingActivity.EXTRA_PREVIEW_PATH);
         ImageView previewImage = (ImageView) findViewById(R.id.preview_image);
-        Glide.with(this).asBitmap().load(Uri.parse("file:///android_asset/" + path)).into(previewImage);
+        Glide.with(this).asBitmap().load(path).into(previewImage);
 
         findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +38,12 @@ public class SaveAndShareActivity extends MAppBaseActivity {
                 if (isSaved) {
                     shareMedia(path);
                 }
+            }
+        });
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
