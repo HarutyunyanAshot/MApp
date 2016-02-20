@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,9 +32,11 @@ public class DrawingActivity extends MAppBaseActivity {
     private ImageButton redo;
     private ArrayList<BgItem> bgItems;
     private int currentImageIndex = -1;
-    public static final String DRAWING_FOLDER = Environment.getExternalStorageDirectory() + "/" + "drawings";
+    private boolean isTouchEnabled = false;
+    public static final String DRAWING_FOLDER = Environment.getExternalStorageDirectory() + "/" + ".drawings";
     private String imageName;
     public static final String EXTRA_PREVIEW_PATH = "previewPath";
+    private String previewImagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +44,11 @@ public class DrawingActivity extends MAppBaseActivity {
         setContentView(R.layout.activity_draving);
 
         Intent intent = getIntent();
-        String previewImagePath = intent.getStringExtra(MainActivity.EXTRA_PREVIEW_IMAGE_PATH);
+        previewImagePath = intent.getStringExtra(MainActivity.EXTRA_PREVIEW_IMAGE_PATH);
         bgItems = (ArrayList<BgItem>) intent.getSerializableExtra(MainActivity.EXTRA_BACKGROUND_ITEMS);
         imageName = intent.getStringExtra(MainActivity.EXTRA_IMAGE_NAME);
         drawingView = (DrawingView) findViewById(R.id.drawing_view);
+
         bgImage = (ImageView) findViewById(R.id.bg_image);
         final View btnBrush = findViewById(R.id.btn_brush);
         final View btnEraser = findViewById(R.id.btn_eraser);
@@ -69,6 +73,20 @@ public class DrawingActivity extends MAppBaseActivity {
 
         Glide.with(this).asBitmap().load(Uri.parse("file:///android_asset/" + previewImagePath)).into(bgImage);
         initButtons();
+        drawingView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (isTouchEnabled)
+                    drawingView.onTouchEvent(event);
+                else {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        next.callOnClick();
+                        isTouchEnabled = true;
+                    }
+                }
+                return true;
+            }
+        });
 
         drawingView.setOnChangeListener(new DrawingView.OnChangeListener() {
             @Override
@@ -85,6 +103,9 @@ public class DrawingActivity extends MAppBaseActivity {
         next = (ImageButton) findViewById(R.id.btn_next);
         undo = (ImageButton) findViewById(R.id.btn_undo);
         redo = (ImageButton) findViewById(R.id.btn_redo);
+
+        prev.setEnabled(false);
+        prev.setAlpha(0.6f);
 
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +129,9 @@ public class DrawingActivity extends MAppBaseActivity {
             @Override
             public void onClick(View v) {
                 if (currentImageIndex == bgItems.size()) {
-                    bgImage.setAlpha(0.6f);
+                    next.setEnabled(true);
+                    next.setAlpha(1f);
+                    bgImage.setAlpha(0.5f);
                     currentImageIndex--;
                 } else if (currentImageIndex > 0) {
                     try {
@@ -126,6 +149,16 @@ public class DrawingActivity extends MAppBaseActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    try {
+                        bgImage.setImageDrawable(Drawable.createFromStream(getAssets().open(previewImagePath), null));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    isTouchEnabled = false;
+                    currentImageIndex--;
+                    prev.setEnabled(false);
+                    prev.setAlpha(0.5f);
                 }
             }
         });
@@ -137,19 +170,24 @@ public class DrawingActivity extends MAppBaseActivity {
                         currentImageIndex++;
                         switch (bgItems.get(currentImageIndex).getSize()) {
                             case 1:
-                                drawingView.setBrushSize(6f);
+                                drawingView.setBrushSize(8f);
                                 break;
                             case 2:
-                                drawingView.setBrushSize(15f);
+                                drawingView.setBrushSize(20f);
                                 break;
                         }
                         drawingView.setBrushColor(bgItems.get(currentImageIndex).getColor());
-                        bgImage.setAlpha(0.6f);
+                        bgImage.setAlpha(0.5f);
+                        prev.setEnabled(true);
+                        prev.setAlpha(1f);
+                        isTouchEnabled = true;
                         bgImage.setImageDrawable(Drawable.createFromStream(getAssets().open(bgItems.get(currentImageIndex).getPath()), null));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else if (currentImageIndex == bgItems.size() - 1) {
+                    next.setEnabled(false);
+                    next.setAlpha(0.5f);
                     bgImage.setAlpha(0f);
                     currentImageIndex++;
 

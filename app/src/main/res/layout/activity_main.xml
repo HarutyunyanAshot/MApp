@@ -7,7 +7,15 @@
     android:background="@color/bg_color"
     tools:context="com.mapps.mapp.activities.MainActivity">
 
+    <ImageView
+        android:id="@+id/top_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:src="@drawable/text"/>
+
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/top_text"
         android:id="@+id/draw_item_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

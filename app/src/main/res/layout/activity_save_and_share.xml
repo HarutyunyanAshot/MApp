@@ -4,12 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/bg_color">
     <ImageButton
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:background="@drawable/btn_back" />
+        <ImageButton
+            android:id="@+id/btn_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/btn_done" />
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/preview_image"
@@ -18,10 +29,12 @@
         android:layout_centerInParent="true" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:background="@color/bg_color"
+        android:gravity="center">
 
         <ImageButton
             android:id="@+id/btn_save"
@@ -31,7 +44,7 @@
             android:background="@drawable/btn_save" />
 
         <Space
-            android:layout_width="24dp"
+            android:layout_width="32dp"
             android:layout_height="wrap_content" />
 
         <ImageButton

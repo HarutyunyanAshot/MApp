@@ -3,13 +3,17 @@ package com.mapps.mapp.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mapps.mapp.R;
+import com.mapps.mapp.utils.PhotoUtils;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Mariam on 2/19/16.
@@ -29,21 +33,29 @@ public class SaveAndShareActivity extends MAppBaseActivity {
         findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                saveToGallery(path);
             }
         });
         findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isSaved) {
                     shareMedia(path);
-                }
             }
         });
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        findViewById(R.id.btn_new).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SaveAndShareActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+//                finish();
             }
         });
 
@@ -61,6 +73,15 @@ public class SaveAndShareActivity extends MAppBaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
 
+        }
+    }
+    private void saveToGallery(String filePath) {
+        String newFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/" + new File(filePath).getName();
+        try {
+            PhotoUtils.copyDirectoryOneLocationToAnotherLocation(new File(filePath), new File(newFilePath) );
+            Toast.makeText(this, "Image successfully saved.", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
