@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -15,7 +15,6 @@ import com.mapps.mapp.R;
 import com.mapps.mapp.utils.PhotoUtils;
 import com.mapps.mapp.view.DrawingView;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -25,14 +24,15 @@ import java.util.ArrayList;
 public class DrawingActivity extends MAppBaseActivity {
     private DrawingView drawingView;
     private ImageView bgImage;
-    private Button prev;
-    private Button next;
-    private Button undo;
-    private Button redo;
+    private ImageButton prev;
+    private ImageButton next;
+    private ImageButton undo;
+    private ImageButton redo;
     private ArrayList<String> imageDetailsPaths;
     private int currentImageIndex = -1;
     public static final String DRAWING_FOLDER = Environment.getExternalStorageDirectory() + "/" + "drawings";
     private String imageName;
+    public static final String EXTRA_PREVIEW_PATH = "previewPath";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,14 @@ public class DrawingActivity extends MAppBaseActivity {
         imageName = intent.getStringExtra(MainActivity.EXTRA_IMAGE_NAME);
         drawingView = (DrawingView) findViewById(R.id.drawing_view);
         bgImage = (ImageView) findViewById(R.id.bg_image);
-        View btnBrush = findViewById(R.id.btn_brush);
-        View btnEraser = findViewById(R.id.btn_eraser);
+        final View btnBrush = findViewById(R.id.btn_brush);
+        final View btnEraser = findViewById(R.id.btn_eraser);
+        btnBrush.setSelected(true);
         btnBrush.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnEraser.setSelected(false);
+                btnBrush.setSelected(true);
                 drawingView.setBrush();
             }
         });
@@ -58,6 +61,8 @@ public class DrawingActivity extends MAppBaseActivity {
             @Override
             public void onClick(View v) {
                 drawingView.setEraser();
+                btnEraser.setSelected(true);
+                btnBrush.setSelected(false);
             }
         });
 
@@ -75,10 +80,10 @@ public class DrawingActivity extends MAppBaseActivity {
     }
 
     private void initButtons() {
-        prev = (Button) findViewById(R.id.btn_prev);
-        next = (Button) findViewById(R.id.btn_next);
-        undo = (Button) findViewById(R.id.btn_undo);
-        redo = (Button) findViewById(R.id.btn_redo);
+        prev = (ImageButton) findViewById(R.id.btn_prev);
+        next = (ImageButton) findViewById(R.id.btn_next);
+        undo = (ImageButton) findViewById(R.id.btn_undo);
+        redo = (ImageButton) findViewById(R.id.btn_redo);
 
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,31 +131,28 @@ public class DrawingActivity extends MAppBaseActivity {
                     }
                 } else if (currentImageIndex == imageDetailsPaths.size() - 1) {
                     bgImage.setAlpha(0f);
-                    next.setText("Done");
                     currentImageIndex++;
 
-                } else if (currentImageIndex == imageDetailsPaths.size()) {
-                    String name = imageName + "_" + System.currentTimeMillis() + ".jpg";
-                    PhotoUtils.saveBitmapToDir(DRAWING_FOLDER, name, drawingView.getBitmap(), DrawingActivity.this, Bitmap.CompressFormat.JPEG);
-                    shareMedia(DRAWING_FOLDER + "/" + name);
                 }
+            }
+        });
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        findViewById(R.id.btn_done).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = imageName + "_" + System.currentTimeMillis() + ".jpg";
+                PhotoUtils.saveBitmapToDir(DRAWING_FOLDER, name, drawingView.getBitmap(), DrawingActivity.this, Bitmap.CompressFormat.JPEG);
+                Intent intent = new Intent(DrawingActivity.this, SaveAndShareActivity.class);
+                intent.putExtra(EXTRA_PREVIEW_PATH, DRAWING_FOLDER + "/" + name);
+                startActivity(intent);
             }
         });
 
     }
 
-    public void shareMedia(String filePath) {
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("image/jpeg");
-        File media = new File(filePath);
-        Uri uri = Uri.fromFile(media);
-        try {
-            share.putExtra(Intent.EXTRA_STREAM, uri);
-
-            startActivity(Intent.createChooser(share, "Share with"));
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-    }
 }

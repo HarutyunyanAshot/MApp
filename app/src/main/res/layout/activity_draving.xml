@@ -3,67 +3,121 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/top_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal">
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:background="@color/bg_color"
+        android:layout_alignParentTop="true">
 
-        <Button
-            android:id="@+id/btn_undo"
+        <ImageButton
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:text="Undo" />
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/btn_back"
+             />
 
-        <Button
-            android:id="@+id/btn_redo"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:text="Redo" />
+            android:layout_centerInParent="true">
 
-        <Button
-            android:id="@+id/btn_prev"
+            <ImageButton
+                android:id="@+id/btn_prev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/btn_prev" />
+
+            <ImageButton
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_next" />
+
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back" />
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_done" />
 
-        <Button
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next" />
+    </RelativeLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/bottom_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:background="@color/bg_color"
+        android:layout_alignParentBottom="true">
 
-        <Button
-            android:id="@+id/btn_brush"
+
+        <ImageButton
+            android:id="@+id/color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Brush" />
+            android:background="@drawable/color_picker"
+            android:layout_alignParentLeft="true" />
 
-        <Button
-            android:id="@+id/btn_eraser"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Eraser" />
-    </LinearLayout>
+            android:layout_centerInParent="true">
+
+            <ImageButton
+                android:id="@+id/btn_brush"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_brush" />
+
+            <Space
+                android:layout_width="24dp"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/btn_eraser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_eraser" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageButton
+                android:id="@+id/btn_undo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_undo" />
+
+            <Space
+                android:layout_width="24dp"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/btn_redo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_redo" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/bg_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_panel"
-        android:layout_below="@id/top_panel"/>
+        android:layout_below="@id/top_panel" />
 
     <com.mapps.mapp.view.DrawingView
         android:id="@+id/drawing_view"
