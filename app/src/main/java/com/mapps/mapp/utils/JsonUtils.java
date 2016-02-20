@@ -2,6 +2,7 @@ package com.mapps.mapp.utils;
 
 import android.content.res.Resources;
 
+import com.mapps.mapp.items.BgItem;
 import com.mapps.mapp.items.DrawItem;
 
 import org.json.JSONArray;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
  */
 public class JsonUtils {
     public static final String JSON_PROP_NAME = "name";
+    public static final String JSON_PROP_SIZE = "size";
+    public static final String JSON_PROP_COLOR = "color";
     public static final String JSON_PROP_IMAGE = "image";
     public static final String JSON_PROP_DETAIL_IMAGES = "detail_images";
 
@@ -36,11 +39,16 @@ public class JsonUtils {
                 String categoryImageName = drawCategory.getString(JSON_PROP_IMAGE);
                 String categoryImagePath = "images/" + categoryImageName;
                 JSONArray categoryImages = drawCategory.getJSONArray(JSON_PROP_DETAIL_IMAGES);
-                ArrayList<String> imageDetailsPaths = new ArrayList<>();
+                ArrayList<BgItem> bgItems = new ArrayList<>();
+                BgItem item;
                 for (int j = 0; j < categoryImages.length(); j++) {
-                    imageDetailsPaths.add("images/" + categoryName + "/" + categoryImages.getJSONObject(j).getString(JSON_PROP_NAME));
+                    item = new BgItem();
+                    item.setSize(categoryImages.getJSONObject(j).getInt(JSON_PROP_SIZE));
+                    item.setColor(categoryImages.getJSONObject(j).getInt(JSON_PROP_COLOR));
+                    item.setPath("images/" + categoryName + "/" + categoryImages.getJSONObject(j).getString(JSON_PROP_NAME));
+                    bgItems.add(item);
                 }
-                categories.add(new DrawItem(categoryName, categoryImagePath, imageDetailsPaths));
+                categories.add(new DrawItem(categoryName, categoryImagePath, bgItems));
             }
 
         } catch (IOException e) {

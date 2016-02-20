@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class DrawItem {
     public String imagePath;
     public String itemName;
-    public ArrayList<String> imageDetailsPaths;
+    public ArrayList<BgItem> bgItems;
 
 
-    public DrawItem( String itemName, String imagePath, ArrayList<String> imageDetailsPaths) {
+    public DrawItem( String itemName, String imagePath, ArrayList<BgItem> bgItems) {
         this.imagePath = imagePath;
         this.itemName = itemName;
-        this.imageDetailsPaths = imageDetailsPaths;
+        this.bgItems = bgItems;
     }
 }

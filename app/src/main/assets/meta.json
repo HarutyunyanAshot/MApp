@@ -4,34 +4,54 @@
     "image": "dog.png",
     "detail_images": [
       {
-        "name": "1.png"
+        "name": "1.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "2.png"
+        "name": "2.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "3.png"
+        "name": "3.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "4.png"
+        "name": "4.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "5.png"
+        "name": "5.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "6.png"
+        "name": "6.png",
+        "size": 2,
+        "color": 4278190080
       },
       {
-        "name": "7.png"
+        "name": "7.png",
+        "size": 2,
+        "color": 4291806911
       },
       {
-        "name": "8.png"
+        "name": "8.png",
+        "size": 2,
+        "color": 4289636000
       },
       {
-        "name": "9.png"
+        "name": "9.png",
+        "size": 2,
+        "color": 4288648334
       },
       {
-        "name": "10.png"
+        "name": "10.png",
+        "size": 2,
+        "color": 4286476137
       }
     ]
   },
@@ -40,28 +60,44 @@
     "image": "cat.png",
     "detail_images": [
       {
-        "name": "1.png"
+        "name": "1.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "2.png"
+        "name": "2.png",
+        "size": "1",
+        "color": 4278190080
       },
       {
-        "name": "3.png"
+        "name": "3.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "4.png"
+        "name": "4.png",
+        "size": 2,
+        "color": 4278387716
       },
       {
-        "name": "5.png"
+        "name": "5.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "6.png"
+        "name": "6.png",
+        "size": 2,
+        "color": 4288516746
       },
       {
-        "name": "7.png"
+        "name": "7.png",
+        "size": 2,
+        "color": 4287594871
       },
       {
-        "name": "8.png"
+        "name": "8.png",
+        "size": 2,
+        "color": 4292459689
       }
     ]
   },
@@ -70,28 +106,44 @@
     "image": "fox.png",
     "detail_images": [
       {
-        "name": "1.png"
+        "name": "1.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "2.png"
+        "name": "2.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "3.png"
+        "name": "3.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "4.png"
+        "name": "4.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "5.png"
+        "name": "5.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "6.png"
+        "name": "6.png",
+        "size": 2,
+        "color": 4278387716
       },
       {
-        "name": "7.png"
+        "name": "7.png",
+        "size": 2,
+        "color": 4294150706
       },
       {
-        "name": "8.png"
+        "name": "8.png",
+        "size": 2,
+        "color": 4294308841
       }
     ]
   },
@@ -100,28 +152,44 @@
     "image": "lion.png",
     "detail_images": [
       {
-        "name": "1.png"
+        "name": "1.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "2.png"
+        "name": "2.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "3.png"
+        "name": "3.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "4.png"
+        "name": "4.png",
+        "size": 2,
+        "color": 4278387716
       },
       {
-        "name": "5.png"
+        "name": "5.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "6.png"
+        "name": "6.png",
+        "size": 2,
+        "color": 4294148127
       },
       {
-        "name": "7.png"
+        "name": "7.png",
+        "size": 2,
+        "color": 4294227802
       },
       {
-        "name": "8.png"
+        "name": "8.png",
+        "size": 2,
+        "color": 4294232710
       }
     ]
   },
@@ -130,31 +198,49 @@
     "image": "sheep.png",
     "detail_images": [
       {
-        "name": "1.png"
+        "name": "1.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "2.png"
+        "name": "2.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "3.png"
+        "name": "3.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "4.png"
+        "name": "4.png",
+        "size": 2,
+        "color": 4278387716
       },
       {
-        "name": "5.png"
+        "name": "5.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "6.png"
+        "name": "6.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "7.png"
+        "name": "7.png",
+        "size": 2,
+        "color": 4291283659
       },
       {
-        "name": "8.png"
+        "name": "8.png",
+        "size": 2,
+        "color": 4293783012
       },
       {
-        "name": "9.png"
+        "name": "9.png",
+        "size": 2,
+        "color": 4290031005
       }
     ]
   },
@@ -163,31 +249,49 @@
     "image": "bear.png",
     "detail_images": [
       {
-        "name": "1.png"
+        "name": "1.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "2.png"
+        "name": "2.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "3.png"
+        "name": "3.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "4.png"
+        "name": "4.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "5.png"
+        "name": "5.png",
+        "size": 1,
+        "color": 4278190080
       },
       {
-        "name": "6.png"
+        "name": "6.png",
+        "size": 2,
+        "color": 4278387716
       },
       {
-        "name": "7.png"
+        "name": "7.png",
+        "size": 2,
+        "color": 4290155641
       },
       {
-        "name": "8.png"
+        "name": "8.png",
+        "size": 2,
+        "color": 4292989375
       },
       {
-        "name": "9.png"
+        "name": "9.png",
+        "size": 2,
+        "color": 4288378461
       }
     ]
   }

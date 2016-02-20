@@ -109,6 +109,16 @@ public class Eraser extends Curve {
         updateBounds.inset(-thickness, -thickness);
     }
 
+    @Override
+    protected void setBrushSize(float size) {
+        paint.setStrokeWidth(size);
+    }
+
+    @Override
+    protected void setBrushColor(int color) {
+
+    }
+
     public void addPointToRect(Rect rect, float x, float y) {
         rect.left = Math.min(rect.left, (int) x - 1);
         rect.top = Math.min(rect.top, (int) y - 1);

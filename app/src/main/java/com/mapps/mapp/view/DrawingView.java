@@ -146,6 +146,14 @@ public class DrawingView extends View {
         return bitmap;
     }
 
+    public void setBrushSize(float size) {
+        controller.setBrushSize(size);
+    }
+
+    public void setBrushColor(int color) {
+        controller.setBrushColor(color);
+    }
+
     public void setOnChangeListener(OnChangeListener listener) {
         this.listener = listener;
     }

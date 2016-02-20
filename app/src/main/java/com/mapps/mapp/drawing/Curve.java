@@ -22,9 +22,12 @@ public abstract class Curve {
 
     protected abstract void addPoint(float x, float y, float pressure);
 
-//    public abstract void draw(Canvas canvas);
 
     protected abstract void update(Canvas canvas);
 
     protected abstract void computeUpdateBounds(Rect updateBounds);
+
+    protected abstract void setBrushSize(float size);
+
+    protected abstract void setBrushColor(int color);
 }

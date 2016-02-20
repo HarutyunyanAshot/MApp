@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.mapps.mapp.R;
 import com.mapps.mapp.adapters.DrawItemListAdapter;
+import com.mapps.mapp.items.BgItem;
 import com.mapps.mapp.items.DrawItem;
 import com.mapps.mapp.listeners.RecyclerItemClickListener;
 import com.mapps.mapp.utils.JsonUtils;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends MAppBaseActivity {
     private DrawItemListAdapter adapter;
-    public static final String EXTRA_IMAGE_DETAILS_PATHS = "imageDetailsPaths";
+    public static final String EXTRA_BACKGROUND_ITEMS = "bgItems";
     public static final String EXTRA_PREVIEW_IMAGE_PATH = "previewImagePath";
     public static final String EXTRA_IMAGE_NAME = "ImageName";
 
@@ -36,8 +37,8 @@ public class MainActivity extends MAppBaseActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(MainActivity.this,DrawingActivity.class);
-                ArrayList<String> detailImagePaths = adapter.getItem(position).imageDetailsPaths;
-                intent.putStringArrayListExtra(EXTRA_IMAGE_DETAILS_PATHS,detailImagePaths);
+                ArrayList<BgItem> bgItems = adapter.getItem(position).bgItems;
+                intent.putExtra(EXTRA_BACKGROUND_ITEMS,bgItems);
                 intent.putExtra(EXTRA_PREVIEW_IMAGE_PATH, adapter.getItem(position).imagePath);
                 intent.putExtra(EXTRA_IMAGE_NAME,adapter.getItem(position).itemName);
                 startActivity(intent);

@@ -1,6 +1,7 @@
 package com.mapps.mapp.drawing;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,6 +19,9 @@ public class Controller {
 
     private float prevX;
     private float prevY;
+
+    private int color = Color.BLACK;
+    private float size = 6f;
 
     private boolean isEraser = false;
 
@@ -61,6 +65,8 @@ public class Controller {
 
     protected void onTouchDown(float x, float y) {
         curve = isEraser ? new Eraser() : new Brush();
+        curve.setBrushColor(color);
+        curve.setBrushSize(size);
         curve.setStartPoint(x, y, 0.0f);//TODO revise
         if (curve.isPiecewiseUpdatable())
             curve.update(drawingView.getCanvas());
@@ -116,6 +122,14 @@ public class Controller {
 
         onTouchEventReceived(event);
         return true;
+    }
+
+    public void setBrushSize(float size) {
+        this.size = size;
+    }
+
+    public void setBrushColor(int color) {
+        this.color = color;
     }
 
     public void setEraser(boolean isEraser) {

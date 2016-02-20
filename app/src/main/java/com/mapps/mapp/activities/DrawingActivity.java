@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.mapps.mapp.R;
+import com.mapps.mapp.items.BgItem;
 import com.mapps.mapp.utils.PhotoUtils;
 import com.mapps.mapp.view.DrawingView;
 
@@ -28,7 +29,7 @@ public class DrawingActivity extends MAppBaseActivity {
     private ImageButton next;
     private ImageButton undo;
     private ImageButton redo;
-    private ArrayList<String> imageDetailsPaths;
+    private ArrayList<BgItem> bgItems;
     private int currentImageIndex = -1;
     public static final String DRAWING_FOLDER = Environment.getExternalStorageDirectory() + "/" + "drawings";
     private String imageName;
@@ -41,7 +42,7 @@ public class DrawingActivity extends MAppBaseActivity {
 
         Intent intent = getIntent();
         String previewImagePath = intent.getStringExtra(MainActivity.EXTRA_PREVIEW_IMAGE_PATH);
-        imageDetailsPaths = intent.getStringArrayListExtra(MainActivity.EXTRA_IMAGE_DETAILS_PATHS);
+        bgItems = (ArrayList<BgItem>) intent.getSerializableExtra(MainActivity.EXTRA_BACKGROUND_ITEMS);
         imageName = intent.getStringExtra(MainActivity.EXTRA_IMAGE_NAME);
         drawingView = (DrawingView) findViewById(R.id.drawing_view);
         bgImage = (ImageView) findViewById(R.id.bg_image);
@@ -106,13 +107,22 @@ public class DrawingActivity extends MAppBaseActivity {
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentImageIndex == imageDetailsPaths.size()) {
+                if (currentImageIndex == bgItems.size()) {
                     bgImage.setAlpha(0.6f);
                     currentImageIndex--;
                 } else if (currentImageIndex > 0) {
                     try {
-
-                        bgImage.setImageDrawable(Drawable.createFromStream(getAssets().open(imageDetailsPaths.get(--currentImageIndex)), null));
+                        currentImageIndex--;
+                        switch (bgItems.get(currentImageIndex).getSize()) {
+                            case 1:
+                                drawingView.setBrushSize(6f);
+                                break;
+                            case 2:
+                                drawingView.setBrushSize(15f);
+                                break;
+                        }
+                        drawingView.setBrushColor(bgItems.get(currentImageIndex).getColor());
+                        bgImage.setImageDrawable(Drawable.createFromStream(getAssets().open(bgItems.get(currentImageIndex).getPath()), null));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -122,14 +132,24 @@ public class DrawingActivity extends MAppBaseActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentImageIndex < imageDetailsPaths.size() - 1) {
+                if (currentImageIndex < bgItems.size() - 1) {
                     try {
+                        currentImageIndex++;
+                        switch (bgItems.get(currentImageIndex).getSize()) {
+                            case 1:
+                                drawingView.setBrushSize(6f);
+                                break;
+                            case 2:
+                                drawingView.setBrushSize(15f);
+                                break;
+                        }
+                        drawingView.setBrushColor(bgItems.get(currentImageIndex).getColor());
                         bgImage.setAlpha(0.6f);
-                        bgImage.setImageDrawable(Drawable.createFromStream(getAssets().open(imageDetailsPaths.get(++currentImageIndex)), null));
+                        bgImage.setImageDrawable(Drawable.createFromStream(getAssets().open(bgItems.get(currentImageIndex).getPath()), null));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else if (currentImageIndex == imageDetailsPaths.size() - 1) {
+                } else if (currentImageIndex == bgItems.size() - 1) {
                     bgImage.setAlpha(0f);
                     currentImageIndex++;
 

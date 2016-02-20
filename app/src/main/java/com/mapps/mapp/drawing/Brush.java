@@ -92,4 +92,13 @@ public class Brush extends Curve {
         tmpBoundsF.roundOut(bounds);
     }
 
+    @Override
+    protected void setBrushSize(float size) {
+        paint.setStrokeWidth(size);
+    }
+
+    @Override
+    protected void setBrushColor(int color) {
+        paint.setColor(color);
+    }
 }
