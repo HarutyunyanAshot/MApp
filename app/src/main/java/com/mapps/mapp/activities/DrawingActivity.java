@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -103,7 +106,13 @@ public class DrawingActivity extends MAppBaseActivity {
         next = (ImageButton) findViewById(R.id.btn_next);
         undo = (ImageButton) findViewById(R.id.btn_undo);
         redo = (ImageButton) findViewById(R.id.btn_redo);
-
+        final ImageButton btnDone = (ImageButton)findViewById(R.id.btn_done);
+        final Animation blinkAnimation = new ScaleAnimation(1,1.2f,1,1.2f);
+        blinkAnimation.setDuration(500); // duration - half a second
+        blinkAnimation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+        blinkAnimation.setRepeatCount(Animation.INFINITE); // Repeat animation infinitely
+        blinkAnimation.setRepeatMode(Animation.REVERSE); // Reverse animation at the end so the button will fade back in
+        next.startAnimation(blinkAnimation);
         prev.setEnabled(false);
         prev.setAlpha(0.6f);
 
@@ -188,6 +197,8 @@ public class DrawingActivity extends MAppBaseActivity {
                 } else if (currentImageIndex == bgItems.size() - 1) {
                     next.setEnabled(false);
                     next.setAlpha(0.5f);
+                    next.clearAnimation();
+                    btnDone.startAnimation(blinkAnimation);
                     bgImage.setAlpha(0f);
                     currentImageIndex++;
 
@@ -200,7 +211,7 @@ public class DrawingActivity extends MAppBaseActivity {
                 onBackPressed();
             }
         });
-        findViewById(R.id.btn_done).setOnClickListener(new View.OnClickListener() {
+        btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = imageName + "_" + System.currentTimeMillis() + ".jpg";
